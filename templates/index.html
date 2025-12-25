@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodBeats - Bollywood Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a0036 0%, #2d0b52 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 18px #ff00cc, 0 0 30px #3333ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-icon {
+            font-size: 4rem;
+            color: #ff00cc;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px #ff00cc);
+        }
+        .form-container {
+            background: rgba(30, 0, 60, 0.85);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 40px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .form-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #fff;
+            text-shadow: 0 0 8px #ff00cc;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: #ff00cc;
+            background: linear-gradient(90deg, #ff00cc 0%, #3333ff 100%);
+            height: 8px;
+            border-radius: 5px;
+            outline: none;
+            margin: 12px 0;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ff00cc;
+            box-shadow: 0 0 10px #ff00cc, 0 0 20px #3333ff;
+            cursor: pointer;
+            border: 2px solid #fff;
+        }
+        .value-display {
+            color: #ff00cc;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: 4px;
+        }
+        button {
+            background: linear-gradient(90deg, #ff00cc 0%, #3333ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 16px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff00cc;
+            transition: background 0.2s, transform 0.2s;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            display: block;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #3333ff 0%, #ff00cc 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .songs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+            justify-items: center;
+        }
+        .song-card {
+            background: rgba(40, 0, 70, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 0 18px #3333ff44;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            max-width: 320px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .song-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 0 28px #ff00cc88;
+        }
+        .song-img-wrapper {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #1a0036;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .song-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Changed from cover to contain to prevent cropping */
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .song-info {
+            padding: 16px 20px;
+        }
+        .song-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .song-artist {
+            font-size: 1.1rem;
+            color: #ffb3f6;
+            margin-bottom: 12px;
+        }
+        .audio-player {
+            width: 100%;
+        }
+        footer {
+            text-align: center;
+            color: #ffb3f6 Sean:
+            color: #ffb3f6;
+            margin-top: 50px;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .logo {
+                font-size: 2.8rem;
+            }
+            .form-container {
+                padding: 30px 20px;
+            }
+            .songs-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .audio-error {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        .audio-loading {
+            color: #4ecdc4;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                MoodBeats
+            </div>
+        </div>
+        <form method="POST" class="form-container">
+            <h2 class="form-title">How are you feeling today?</h2>
+            <div class="form-group">
+                <label for="energy">🥰 Energy Level</label>
+                <input type="range" min="1" max="10" step="0.1" name="energy" id="energy" value="5" oninput="updateValue('energy-value', this.value)" required>
+                <div class="value-display" id="energy-value">5.0</div>
+            </div>
+            <div class="form-group">
+                <label for="danceability">😊 Danceability</label>
+                <input type="range" min="1" max="10" step="0.1" name="danceability" id="danceability" value="5" oninput="updateValue('dance-value', this.value)" required>
+                <div class="value-display" id="dance-value">5.0</div>
+            </div>
+            <div class="form-group">
+                <label for="valence">🥰 Positivity</label>
+                <input type="range" min="1" max="10" step="0.1" name="valence" id="valence" value="5" oninput="updateValue('valence-value', this.value)" required>
+                <div class="value-display" id="valence-value">5.0</div>
+            </div>
+            <button type="submit">Find My Perfect Songs 🎶</button>
+        </form>
+
+        {% if mood %}
+        <div class="mood-section">
+            <div class="mood-title">
+                <i class="fas fa-heart"></i> Your Mood: <span class="mood-name">{{ mood }}</span>
+            </div>
+            <div class="songs-container">
+                {% for song in songs %}
+                <div class="song-card">
+                    <div class="song-img-wrapper">
+                        <img src="{{ song.image_url }}" alt="{{ song.name }}" class="song-img">
+                    </div>
+                    <div class="song-info">
+                        <div class="song-name">{{ song.name }}</div>
+                        <div class="song-artist">{{ song.artist if song.artist else '' }}</div>
+                        <audio controls class="audio-player" preload="metadata">
+                            <source src="{{ song.audio_url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div class="audio-debug" style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+                            Audio URL: {{ song.audio_url }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        MoodBeats - Bollywood Edition © 2025 | Your AI-powered music companion
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const audios = document.querySelectorAll('audio');
+
+            audios.forEach(audio => {
+                // Create error and loading message elements
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'audio-error';
+                errorMsg.textContent = 'Error loading audio. Please try again.';
+
+                const loadingMsg = document.createElement('div');
+                loadingMsg.className = 'audio-loading';
+                loadingMsg.textContent = 'Loading audio...';
+
+                audio.parentNode.appendChild(loadingMsg);
+                audio.parentNode.appendChild(errorMsg);
+
+                // Handle audio loading
+                audio.addEventListener('loadstart', () => {
+                    loadingMsg.style.display = 'block';
+                    errorMsg.style.display = 'none';
+                });
+
+                audio.addEventListener('canplay', () => {
+                    loadingMsg.style.display = 'none';
+                    errorMsg.style.display = 'none';
+                });
+
+                audio.addEventListener('error', () => {
+                    loadingMsg.style.display = 'none';
+                    errorMsg.style.display = 'block';
+                    console.error('Audio loading error:', audio.src);
+                });
+
+                // Handle play/pause of other audios
+                audio.addEventListener('play', () => {
+                    audios.forEach(other => {
+                        if (other !== audio) {
+                            other.pause();
+                            other.currentTime = 0;
+                        }
+                    });
+                });
+
+                // Preload audio
+                audio.preload = 'auto';
+            });
+        });
+
+        function updateValue(id, value) {
+            document.getElementById(id).textContent = parseFloat(value).toFixed(1);
+        }
+
+        // Add error handling for the form
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const inputs = this.querySelectorAll('input[type="range"]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const value = parseFloat(input.value);
+                if (isNaN(value) || value < 1 || value > 10) {
+                    isValid = false;
+                    input.style.borderColor = '#ff6b6b';
+                } else {
+                    input.style.borderColor = '';
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please enter valid values between 1 and 10');
+            }
+        });
+    </script>
+</body>
+</html>
